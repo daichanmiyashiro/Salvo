@@ -1,9 +1,8 @@
 package com.codeoftheweb.Salvo.models;
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 public class Player {
@@ -15,26 +14,38 @@ public class Player {
 
     private String userName;
 
-    public Player() { }
+    @OneToMany(mappedBy="player", fetch=FetchType.EAGER)
+    private Set<GamePlayer> gamePlayers = new HashSet<>();
+
+    public Player() {
+    }
 
     public Player(String userName) {
-
         this.userName = userName;
+    }
 
+    public void addGamePlayer(GamePlayer gamePlayer) {
+        gamePlayer.setPlayer(this);
+        gamePlayers.add(gamePlayer);
+    }
+
+    public List<Game> getGamePlayer() {
+        return gamePlayers.stream().map(sub -> sub.getGame()).collect(Collectors.toList());
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getUserName() {
-
         return userName;
     }
 
-    public void setUserName(String userName) {
-
-        this.userName = userName;
-    }
-
+    @Override
     public String toString() {
-
-        return userName;
+        return "Player {" +
+                " id = " + id +
+                ", email = '" + userName + '\'' +
+                '}';
     }
 }

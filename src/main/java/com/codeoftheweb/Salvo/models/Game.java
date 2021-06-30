@@ -1,11 +1,11 @@
 package com.codeoftheweb.Salvo.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Entity
 public class Game {
@@ -17,18 +17,51 @@ public class Game {
 
     private LocalDateTime fechaCreacion;
 
+    @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
+    private Set<GamePlayer> gamePlayers = new HashSet<>();
+
     public Game() {
     }
 
     public Game(LocalDateTime date) {
+
         this.fechaCreacion = date;
     }
 
+    public void addGamePlayer(GamePlayer gamePlayer) {
+        gamePlayer.setGame(this);
+        gamePlayers.add(gamePlayer);
+    }
+
+   /* @JsonIgnore
+    public List<Player> getGamePlayer() {
+        return gamePlayers.stream().map(sub -> sub.getPlayer()).collect(Collectors.toList());
+    }*/
+
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
+
     public LocalDateTime getFechaCreacion() {
+
         return fechaCreacion;
     }
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
+
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", fechaCreacion=" + fechaCreacion +
+                ", gamePlayers=" + gamePlayers +
+                '}';
     }
 }
