@@ -10,7 +10,7 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private long id;
+    private Long id;
 
     private String userName;
 
@@ -33,7 +33,7 @@ public class Player {
         return gamePlayers.stream().map(sub -> sub.getGame()).collect(Collectors.toList());
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

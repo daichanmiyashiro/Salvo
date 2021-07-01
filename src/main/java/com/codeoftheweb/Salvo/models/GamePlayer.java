@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class GamePlayer {
@@ -24,6 +26,15 @@ public class GamePlayer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="player_id")
     private Player player;
+
+    //TAREA 3
+    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
+    private Set<Ship> ships = new HashSet<>();
+
+    public void addShip(Ship ship){
+        ship.setGamePlayer(this);
+        ships.add(ship);
+    }
 
     public GamePlayer() {
     }
@@ -57,6 +68,10 @@ public class GamePlayer {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Set<Ship> getShips() {
+        return ships;
     }
 
     public void setPlayer(Player player) {
