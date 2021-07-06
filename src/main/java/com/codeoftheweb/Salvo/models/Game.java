@@ -4,8 +4,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-
-
 @Entity
 public class Game {
 
@@ -19,10 +17,8 @@ public class Game {
     @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
     private Set<GamePlayer> gamePlayers = new HashSet<>();
 
-    //TAREA 5
-    @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
-    private Set<Score> scores = new HashSet<>();
-
+        @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
+        private Set<Score> scores = new HashSet<>();
 
     public Game() {
     }
@@ -36,11 +32,6 @@ public class Game {
         gamePlayer.setGame(this);
         gamePlayers.add(gamePlayer);
     }
-
-   /* @JsonIgnore
-    public List<Player> getGamePlayer() {
-        return gamePlayers.stream().map(sub -> sub.getPlayer()).collect(Collectors.toList());
-    }*/
 
     public Set<GamePlayer> getGamePlayers() {
         return gamePlayers;
@@ -58,6 +49,10 @@ public class Game {
 
     public Long getId() {
         return id;
+    }
+
+    public Set<Score> getScores() {
+        return scores;
     }
 
     @Override

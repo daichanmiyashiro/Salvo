@@ -4,8 +4,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -27,7 +28,6 @@ public class GamePlayer {
     @JoinColumn(name="player_id")
     private Player player;
 
-    //TAREA 3
     @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
     private Set<Ship> ships = new HashSet<>();
 
@@ -36,7 +36,6 @@ public class GamePlayer {
         ships.add(ship);
     }
 
-    //TAREA 4
     @OneToMany(mappedBy="gPlayer", fetch=FetchType.EAGER)
     private Set<Salvo> salvos = new HashSet<>();
 
@@ -89,5 +88,19 @@ public class GamePlayer {
 
     public Set<Salvo> getSalvos() {
         return salvos;
+    }
+
+    public Map<String, Object> getScoreDto(){
+        Map<String , Object> dto =  new LinkedHashMap<>();
+        dto.put("player", this.getPlayer().getId());
+        Score score = this.getPlayer().getScore(this.getGame());
+        if(score != null){
+            dto.put("score",score.getScore());
+            dto.put("finishDate",score.getFinishDate());
+        }else {
+            dto.put("score",null);
+            dto.put("finishDate",null);
+        }
+        return dto;
     }
 }

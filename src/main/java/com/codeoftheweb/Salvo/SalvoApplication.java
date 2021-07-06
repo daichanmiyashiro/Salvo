@@ -16,7 +16,7 @@ public class SalvoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(PlayerRepository repository, GameRepository gameRepo, GamePlayerRepository gamePlayerRepo,ShipRepository shipRepo, SalvoRepository salvoRepo) {
+	public CommandLineRunner initData(PlayerRepository repository, GameRepository gameRepo, GamePlayerRepository gamePlayerRepo,ShipRepository shipRepo, SalvoRepository salvoRepo,ScoreRepository scoreRepo) {
 		return (args) -> {
 
 			Player player1 = repository.save(new Player("j.bauer@ctu.gov"));
@@ -37,7 +37,7 @@ public class SalvoApplication {
 			GamePlayer gamePlayer3 = gamePlayerRepo.save(new GamePlayer(game2,player1));
 			gamePlayerRepo.save(new GamePlayer(game2,player2));
 			gamePlayerRepo.save(new GamePlayer(game3,player2));
-			gamePlayerRepo.save(new GamePlayer(game3,player2));
+			gamePlayerRepo.save(new GamePlayer(game3,player3));
 			gamePlayerRepo.save(new GamePlayer(game4,player1));
 			gamePlayerRepo.save(new GamePlayer(game4,player4));
 			gamePlayerRepo.save(new GamePlayer(game5,player4));
@@ -55,6 +55,12 @@ public class SalvoApplication {
 			Salvo salvo4 = salvoRepo.save(new Salvo(gamePlayer2, 2 ,List.of("A7","F1","H5","J9","E9")));
 			Salvo salvo5 = salvoRepo.save(new Salvo(gamePlayer1, 3 ,List.of("B4","D8","C3","E4","G1")));
 			Salvo salvo6 = salvoRepo.save(new Salvo(gamePlayer2, 3 ,List.of("A7","F1","H5","J9","E9")));
+
+			Score score1 = scoreRepo.save(new Score(player1,game1,0.5,LocalDateTime.now()));
+			Score score2 = scoreRepo.save(new Score(player2,game1,0.5,LocalDateTime.now()));
+			Score score3 = scoreRepo.save(new Score(player1,game2,1,LocalDateTime.now()));
+			Score score4 = scoreRepo.save(new Score(player2,game2,0,LocalDateTime.now()));
+
 
 
 			
