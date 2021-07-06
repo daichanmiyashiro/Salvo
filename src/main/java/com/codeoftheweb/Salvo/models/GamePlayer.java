@@ -36,6 +36,15 @@ public class GamePlayer {
         ships.add(ship);
     }
 
+    //TAREA 4
+    @OneToMany(mappedBy="gPlayer", fetch=FetchType.EAGER)
+    private Set<Salvo> salvos = new HashSet<>();
+
+    public void addShip(Salvo salvo){
+        salvo.setGamePlayer(this);
+        salvos.add(salvo);
+    }
+
     public GamePlayer() {
     }
 
@@ -76,5 +85,9 @@ public class GamePlayer {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public Set<Salvo> getSalvos() {
+        return salvos;
     }
 }
