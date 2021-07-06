@@ -1,9 +1,7 @@
 package com.codeoftheweb.Salvo.models;
-
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 public class Score {
@@ -23,13 +21,51 @@ public class Score {
 
     private double score;
 
-    @ElementCollection
-    @Column(name="finishGames")
-    private List<Game> finishDate;
+    private LocalDateTime finishDate;
 
     public Score() {
     }
 
+    public Score(Player player, Game game, double score, LocalDateTime finishDate) {
+        this.player = player;
+        this.game = game;
+        this.score = score;
+        this.finishDate = finishDate;
+    }
 
+    public Long getId() {
+        return id;
+    }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public LocalDateTime getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(LocalDateTime finishDate) {
+        this.finishDate = finishDate;
+    }
 }

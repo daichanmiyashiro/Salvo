@@ -44,6 +44,14 @@ public class Player {
         return userName;
     }
 
+    public Set<Score> getScores() {
+        return scores;
+    }
+
+    public Score getScore(Game game){
+        return this.scores.stream().filter(score -> score.getGame().getId()== game.getId()).findFirst().orElse(null);
+    }
+
     @Override
     public String toString() {
         return "Player {" +
