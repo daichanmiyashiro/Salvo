@@ -1,13 +1,12 @@
 package com.codeoftheweb.Salvo;
 import com.codeoftheweb.Salvo.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -24,21 +23,32 @@ public class SalvoController {
     @Autowired
     private GamePlayerRepository gamePlayerRepo;
 
-    @RequestMapping("/games")
+    @GetMapping(value = "/games")
     public List<Object> getListaGames(){
         List<Game> games= gameRepository.findAll();
         return games.stream().map(game -> makeGameDto( game)).collect(Collectors.toList());
     }
 
-    @RequestMapping("/game_view/{id}")
+    @GetMapping("/game_view/{id}")
     public Map<String, Object> getViewGame(@PathVariable Long id){
         Map<String , Object> dto = new LinkedHashMap<>();
         GamePlayer gamePlayer = gamePlayerRepo.findById(id).get();
         Game game = gamePlayer.getGame();
         dto = makeGameDto(game);
         dto.put("ships",gamePlayer.getShips().stream().map(ship->this.makeShip(ship)).collect(Collectors.toList()));
+        dto.put("salvoes",gamePlayer.getGame().getGamePlayers().stream().flatMap(gp->gp.getSalvos().stream().map(salvo->makeSalvoDto(salvo))).collect(Collectors.toList()));
         return dto;
     }
+
+    private Map<String , Object> makeSalvoDto(Salvo salvo){
+        Map<String , Object> dto =  new LinkedHashMap<>();
+        dto.put("turn",salvo.getTurn());
+        dto.put("player",salvo.getGamePlayer().getPlayer().getId());
+        dto.put("locations",salvo.getLocations());
+        return dto;
+    }
+
+
 
     private Map<String , Object> makeGameDto(Game game){
         Map<String , Object> dto =  new LinkedHashMap<>();

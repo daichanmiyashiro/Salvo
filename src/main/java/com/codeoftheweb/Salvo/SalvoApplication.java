@@ -16,7 +16,7 @@ public class SalvoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(PlayerRepository repository, GameRepository gameRepo, GamePlayerRepository gamePlayerRepo,ShipRepository shipRepo) {
+	public CommandLineRunner initData(PlayerRepository repository, GameRepository gameRepo, GamePlayerRepository gamePlayerRepo,ShipRepository shipRepo, SalvoRepository salvoRepo) {
 		return (args) -> {
 
 			Player player1 = repository.save(new Player("j.bauer@ctu.gov"));
@@ -44,12 +44,20 @@ public class SalvoApplication {
 			gamePlayerRepo.save(new GamePlayer(game5,player1));
 			gamePlayerRepo.save(new GamePlayer(game6,player5));
 
-			Ship ship1 = shipRepo.save(new Ship(gamePlayer1,"Destroyer", List.of("B5","B6","B7","B8","B9")));
-			Ship ship2 = shipRepo.save(new Ship(gamePlayer1,"Submarine", List.of("F3","G3","H3")));
-			Ship ship3 = shipRepo.save(new Ship(gamePlayer2,"Patrol Boat", List.of("A1","A2","A3")));
-			Ship ship4 = shipRepo.save(new Ship(gamePlayer2,"buque", List.of("B1","B2","B3","B4","B5")));
+			Ship ship1 = shipRepo.save(new Ship(gamePlayer1,"Destroyer", List.of("H2","H3","H4")));
+			Ship ship2 = shipRepo.save(new Ship(gamePlayer1,"Submarine", List.of("E5","F5","G5")));
+			Ship ship3 = shipRepo.save(new Ship(gamePlayer2,"Battleship", List.of("A1","A2","A3","A4")));
+			Ship ship4 = shipRepo.save(new Ship(gamePlayer2,"Destroyer ", List.of("F1","G1","H1")));
+
+			Salvo salvo1 = salvoRepo.save(new Salvo(gamePlayer1, 1 ,List.of("H1","A2","C5","E1","G6")));
+			Salvo salvo2 = salvoRepo.save(new Salvo(gamePlayer2, 1 ,List.of("C5","F6","A1","I2","J6")));
+			Salvo salvo3 = salvoRepo.save(new Salvo(gamePlayer1, 2 ,List.of("B4","D8","C3","E4","G1")));
+			Salvo salvo4 = salvoRepo.save(new Salvo(gamePlayer2, 2 ,List.of("A7","F1","H5","J9","E9")));
+			Salvo salvo5 = salvoRepo.save(new Salvo(gamePlayer1, 3 ,List.of("B4","D8","C3","E4","G1")));
+			Salvo salvo6 = salvoRepo.save(new Salvo(gamePlayer2, 3 ,List.of("A7","F1","H5","J9","E9")));
 
 
+			
 		};
 	}
 

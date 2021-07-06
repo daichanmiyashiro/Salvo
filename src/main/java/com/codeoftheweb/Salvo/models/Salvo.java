@@ -1,33 +1,34 @@
 package com.codeoftheweb.Salvo.models;
+
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
 
-
 @Entity
-public class Ship {
+public class Salvo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-    private String type;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="gamePlayer_id")
-    private GamePlayer gamePlayer;
+    private GamePlayer gPlayer;
+
+    private int turn;
 
     @ElementCollection
-    @Column(name="shipLocation")
+    @Column(name="salvoLocation")
     private List<String> locations;
 
-    public Ship() {
+    public Salvo() {
     }
 
-    public Ship( GamePlayer gamePlayer,String type, List<String> locations) {
-        this.gamePlayer = gamePlayer;
-        this.type = type;
+    public Salvo(GamePlayer gamePlayer, int turn, List<String> locations) {
+        this.gPlayer = gamePlayer;
+        this.turn = turn;
         this.locations = locations;
     }
 
@@ -35,20 +36,20 @@ public class Ship {
         return id;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public GamePlayer getGamePlayer() {
-        return gamePlayer;
+        return gPlayer;
     }
 
     public void setGamePlayer(GamePlayer gamePlayer) {
-        this.gamePlayer = gamePlayer;
+        this.gPlayer = gamePlayer;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
     }
 
     public List<String> getLocations() {
