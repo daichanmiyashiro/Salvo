@@ -20,11 +20,14 @@ public class Player {
     @OneToMany(mappedBy="player", fetch=FetchType.EAGER)
     private Set<Score> scores = new HashSet<>();
 
+    private String password;
+
     public Player() {
     }
 
-    public Player(String userName) {
+    public Player(String userName,String password) {
         this.userName = userName;
+        this.password = password;
     }
 
     public void addGamePlayer(GamePlayer gamePlayer) {
@@ -50,6 +53,10 @@ public class Player {
 
     public Score getScore(Game game){
         return this.scores.stream().filter(score -> score.getGame().getId()== game.getId()).findFirst().orElse(null);
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
