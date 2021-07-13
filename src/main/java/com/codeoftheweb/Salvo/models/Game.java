@@ -1,8 +1,10 @@
 package com.codeoftheweb.Salvo.models;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 public class Game {
@@ -17,8 +19,9 @@ public class Game {
     @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
     private Set<GamePlayer> gamePlayers = new HashSet<>();
 
-        @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
-        private Set<Score> scores = new HashSet<>();
+    @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
+    private Set<Score> scores = new HashSet<>();
+
 
     public Game() {
     }
@@ -26,6 +29,7 @@ public class Game {
     public Game(LocalDateTime date) {
 
         this.fechaCreacion = date;
+
     }
 
     public void addGamePlayer(GamePlayer gamePlayer) {
@@ -53,6 +57,12 @@ public class Game {
 
     public Set<Score> getScores() {
         return scores;
+    }
+
+
+    @JsonIgnore
+    public List<Player> getPlayers(){
+        return this.gamePlayers.stream().map(gp-> gp.getPlayer()).collect(Collectors.toList());
     }
 
     @Override
