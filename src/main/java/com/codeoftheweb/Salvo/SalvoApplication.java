@@ -65,8 +65,8 @@ public class SalvoApplication extends SpringBootServletInitializer {
 
 			GamePlayer gamePlayer1 = new GamePlayer(game1,player1);
 			GamePlayer gamePlayer2 = new GamePlayer(game1,player2);
-			GamePlayer gamePlayer3 = new GamePlayer(game2,player1);
-			GamePlayer gamePlayer4 = new GamePlayer(game2,player2);
+			GamePlayer gamePlayer3 = new GamePlayer(game2,player3);
+			GamePlayer gamePlayer4 = new GamePlayer(game2,player4);
 
 			gamePlayerRepo.save(gamePlayer1);
 			gamePlayerRepo.save(gamePlayer2);
@@ -99,16 +99,14 @@ public class SalvoApplication extends SpringBootServletInitializer {
 
 			Score score1 = new Score(player1,game1,0.5,LocalDateTime.now());
 			Score score2 = new Score(player2,game1,0.5,LocalDateTime.now());
-			Score score3 = new Score(player1,game2,1,LocalDateTime.now());
-			Score score4 = new Score(player2,game2,0,LocalDateTime.now());
+			Score score3 = new Score(player3,game2,1,LocalDateTime.now());
+			Score score4 = new Score(player4,game2,0,LocalDateTime.now());
 
 			scoreRepo.save(score1);
 			scoreRepo.save(score2);
 			scoreRepo.save(score3);
 			scoreRepo.save(score4);
 
-
-			
 		};
 	}
 
@@ -139,16 +137,14 @@ public class SalvoApplication extends SpringBootServletInitializer {
 	@Configuration
 	class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-		// METODO CONFIGURE
 		//Cómo debe obtener el explorador el nombre de usuario y la contraseña para enviar la aplicación Web
-		//los patrones de direcciones URL que son y no son accesibles para diferentes tipos de usuarios
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http.authorizeRequests()
 					.antMatchers( "/web/**","/api/games","/api/players","/rest/**").permitAll()
 					.anyRequest().authenticated();
 
-			//Cómo debe obtener el explorador el nombre de usuario y la contraseña para enviar la aplicación Web
+
 			http.formLogin()
 					.usernameParameter("name")
 					.passwordParameter("pwd")
