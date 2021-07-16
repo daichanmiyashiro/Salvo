@@ -2,7 +2,9 @@ package com.codeoftheweb.Salvo.models;
 import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,7 @@ public class Game {
 
 
     public Game() {
+        this.fechaCreacion = LocalDateTime.of(LocalDate.now(), LocalTime.now());
     }
 
     public Game(LocalDateTime date) {
