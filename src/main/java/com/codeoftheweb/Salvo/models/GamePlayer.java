@@ -90,7 +90,7 @@ public class GamePlayer {
         return salvos;
     }
 
-    public Map<String, Object> getScoreDto(){
+  /*  public Map<String, Object> getScoreDto(){
         Map<String , Object> dto =  new LinkedHashMap<>();
         dto.put("player", this.getPlayer().getId());
         Score score = this.getPlayer().getScore(this.getGame());
@@ -102,5 +102,17 @@ public class GamePlayer {
             dto.put("finishDate",null);
         }
         return dto;
+
+    }*/
+
+    public Score getScoreDto() {
+
+        Score score = this.getPlayer().getScore(this.getGame());
+        if (score == null) {
+            score= new Score();
+            score.setPlayer(this.getPlayer());
+            score.setScore(0.0);
+        }
+        return score;
     }
 }

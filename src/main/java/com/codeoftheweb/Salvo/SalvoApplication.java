@@ -1,5 +1,6 @@
 package com.codeoftheweb.Salvo;
 import com.codeoftheweb.Salvo.models.*;
+import com.codeoftheweb.Salvo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -40,8 +42,10 @@ public class SalvoApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	public CommandLineRunner initData(PlayerRepository repository, GameRepository gameRepo, GamePlayerRepository gamePlayerRepo,ShipRepository shipRepo, SalvoRepository salvoRepo,ScoreRepository scoreRepo,PasswordEncoder passwordEncoder) {
+	public CommandLineRunner initData(PlayerRepository repository, GameRepository gameRepo, GamePlayerRepository gamePlayerRepo, ShipRepository shipRepo, SalvoRepository salvoRepo, ScoreRepository scoreRepo, PasswordEncoder passwordEncoder) {
 		return (args) -> {
+
+			Date date = new Date();
 
 			Player player1 = new Player("j.bauer@ctu.gov", passwordEncoder().encode("24"));
 			Player player2 = new Player("c.obrian@ctu.gov", passwordEncoder().encode("42"));
@@ -57,11 +61,11 @@ public class SalvoApplication extends SpringBootServletInitializer {
 
 			Game game1 = new Game(LocalDateTime.now());
 			Game game2 = new Game(LocalDateTime.now().plusHours(1));
-			Game game3 = new Game(LocalDateTime.now().plusHours(2));
+			//Game game3 = new Game(LocalDateTime.now().plusHours(2));
 
 			gameRepo.save(game1);
 			gameRepo.save(game2);
-			gameRepo.save(game3);
+			//gameRepo.save(game3);
 
 			GamePlayer gamePlayer1 = new GamePlayer(game1,player1);
 			GamePlayer gamePlayer2 = new GamePlayer(game1,player2);
@@ -73,10 +77,10 @@ public class SalvoApplication extends SpringBootServletInitializer {
 			gamePlayerRepo.save(gamePlayer3);
 			gamePlayerRepo.save(gamePlayer4);
 
-			Ship ship1 = new Ship(gamePlayer1,"Destroyer", List.of("H2","H3","H4"));
-			Ship ship2 = new Ship(gamePlayer1,"Submarine", List.of("E5","F5","G5"));
-			Ship ship3 = new Ship(gamePlayer2,"Battleship", List.of("A1","A2","A3","A4"));
-			Ship ship4 = new Ship(gamePlayer2,"Destroyer ", List.of("F1","G1","H1"));
+			Ship ship1 = new Ship(gamePlayer1,"destroyer", List.of("H2","H3","H4"));
+			Ship ship2 = new Ship(gamePlayer1,"submarine", List.of("E5","F5","G5"));
+			Ship ship3 = new Ship(gamePlayer2,"battleship", List.of("A1","A2","A3","A4"));
+			Ship ship4 = new Ship(gamePlayer2,"carrier ", List.of("F1","G1","H1"));
 
 			shipRepo.save(ship1);
 			shipRepo.save(ship2);
@@ -99,8 +103,8 @@ public class SalvoApplication extends SpringBootServletInitializer {
 
 			Score score1 = new Score(player1,game1,0.5,LocalDateTime.now());
 			Score score2 = new Score(player2,game1,0.5,LocalDateTime.now());
-			Score score3 = new Score(player3,game2,1,LocalDateTime.now());
-			Score score4 = new Score(player4,game2,0,LocalDateTime.now());
+			Score score3 = new Score(player3,game2,1.0,LocalDateTime.now());
+			Score score4 = new Score(player4,game2,0.0,LocalDateTime.now());
 
 			scoreRepo.save(score1);
 			scoreRepo.save(score2);

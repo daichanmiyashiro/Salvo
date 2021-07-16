@@ -59,6 +59,10 @@ public class Player {
         return password;
     }
 
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
+
     @Override
     public String toString() {
         return "Player {" +
