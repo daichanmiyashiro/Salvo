@@ -61,11 +61,9 @@ public class SalvoApplication extends SpringBootServletInitializer {
 
 			Game game1 = new Game(LocalDateTime.now());
 			Game game2 = new Game(LocalDateTime.now().plusHours(1));
-			//Game game3 = new Game(LocalDateTime.now().plusHours(2));
 
 			gameRepo.save(game1);
 			gameRepo.save(game2);
-			//gameRepo.save(game3);
 
 			GamePlayer gamePlayer1 = new GamePlayer(game1,player1);
 			GamePlayer gamePlayer2 = new GamePlayer(game1,player2);
@@ -77,15 +75,28 @@ public class SalvoApplication extends SpringBootServletInitializer {
 			gamePlayerRepo.save(gamePlayer3);
 			gamePlayerRepo.save(gamePlayer4);
 
-			Ship ship1 = new Ship(gamePlayer1,"destroyer", List.of("H2","H3","H4"));
-			Ship ship2 = new Ship(gamePlayer1,"submarine", List.of("E5","F5","G5"));
-			Ship ship3 = new Ship(gamePlayer2,"battleship", List.of("A1","A2","A3","A4"));
-			Ship ship4 = new Ship(gamePlayer2,"carrier ", List.of("F1","G1","H1"));
+			Ship ship1 = new Ship(gamePlayer1,ShipType.DESTROYER, List.of("H2","H3","H4"));
+			Ship ship2 = new Ship(gamePlayer1,ShipType.SUBMARINE, List.of("B5","B6","B7"));
+			Ship ship3 = new Ship(gamePlayer1,ShipType.CARRIER, List.of("E1","E2","E3","E4","E5"));
+			Ship ship4 = new Ship(gamePlayer1,ShipType.BATTLESHIP, List.of("F5","G5","H5","I5"));
+			Ship ship5 = new Ship(gamePlayer1,ShipType.PATROLBOAT, List.of("C5","D5"));
+
+			Ship ship6 = new Ship(gamePlayer2,ShipType.DESTROYER, List.of("A1","A2","A3"));
+			Ship ship7 = new Ship(gamePlayer2,ShipType.SUBMARINE, List.of("F1","G1","H1"));
+			Ship ship8 = new Ship(gamePlayer2,ShipType.CARRIER, List.of("E1","E2","E3","E4","E5"));
+			Ship ship9 = new Ship(gamePlayer2,ShipType.BATTLESHIP, List.of("F5","G5","H5","I5"));
+			Ship ship10 = new Ship(gamePlayer2,ShipType.PATROLBOAT, List.of("C5","D5"));
 
 			shipRepo.save(ship1);
 			shipRepo.save(ship2);
 			shipRepo.save(ship3);
 			shipRepo.save(ship4);
+			shipRepo.save(ship5);
+			shipRepo.save(ship6);
+			shipRepo.save(ship7);
+			shipRepo.save(ship8);
+			shipRepo.save(ship9);
+			shipRepo.save(ship10);
 
 			Salvo salvo1 = new Salvo(gamePlayer1, 1 ,List.of("H1","A2","C5","E1","G6"));
 			Salvo salvo2 = new Salvo(gamePlayer2, 1 ,List.of("C5","F6","A1","I2","J6"));
@@ -94,12 +105,12 @@ public class SalvoApplication extends SpringBootServletInitializer {
 			Salvo salvo5 = new Salvo(gamePlayer1, 3 ,List.of("B4","D8","C3","E4","G1"));
 			Salvo salvo6 = new Salvo(gamePlayer2, 3 ,List.of("A7","F1","H5","J9","E9"));
 
-			salvoRepo.save(salvo1);
+			/*salvoRepo.save(salvo1);
 			salvoRepo.save(salvo2);
 			salvoRepo.save(salvo3);
 			salvoRepo.save(salvo4);
 			salvoRepo.save(salvo5);
-			salvoRepo.save(salvo6);
+			salvoRepo.save(salvo6);*/
 
 			Score score1 = new Score(player1,game1,0.5,LocalDateTime.now());
 			Score score2 = new Score(player2,game1,0.5,LocalDateTime.now());
