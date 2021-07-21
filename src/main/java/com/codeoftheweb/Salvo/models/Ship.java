@@ -11,7 +11,7 @@ public class Ship {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-    private String type;
+    private ShipType type;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="gamePlayer_id")
@@ -24,7 +24,7 @@ public class Ship {
     public Ship() {
     }
 
-    public Ship( GamePlayer gamePlayer,String type, List<String> locations) {
+    public Ship( GamePlayer gamePlayer,ShipType type, List<String> locations) {
         this.gamePlayer = gamePlayer;
         this.type = type;
         this.shipLocations = locations;
@@ -34,11 +34,11 @@ public class Ship {
         return id;
     }
 
-    public String getType() {
+    public ShipType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ShipType type) {
         this.type = type;
     }
 

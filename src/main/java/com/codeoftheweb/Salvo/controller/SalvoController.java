@@ -10,7 +10,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -62,7 +61,8 @@ public class SalvoController {
         Game game = gamePlayer.getGame();
         Player playerAuthentication = playerRepository.findByUserName(authentication.getName());
         if(gamePlayer.getPlayer().getId() == playerAuthentication.getId()){
-            return new ResponseEntity<>(new GameViewDTO(game,gamePlayer), HttpStatus.OK);
+            Map<String , Object> hits = Util.getHits(gamePlayer);
+            return new ResponseEntity<>(new GameViewDTO(game,gamePlayer,hits), HttpStatus.OK);
         }else{
             return new ResponseEntity<>(Util.makeMap("error","User ID not authorized"),HttpStatus.UNAUTHORIZED);
         }
@@ -162,7 +162,7 @@ public class SalvoController {
         }
         Game game = gp1.getGame();
 
-        if(gp1.getPlayer().getId() !=playerAuthentication.getId() ){
+        if(gp1.getPlayer().getId() != playerAuthentication.getId() ){
             return new ResponseEntity<>(Util.makeMap("error","ID does not correspond to the player"),HttpStatus.UNAUTHORIZED);
         }
 
@@ -172,7 +172,7 @@ public class SalvoController {
         }
 
         if(salvo.getSalvoLocations().size() < 1 || salvo.getSalvoLocations().size() > 5){
-            return new ResponseEntity<>(Util.makeMap("error","the amount not allowed"),HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(Util.makeMap("error","this amount is not allowed"),HttpStatus.FORBIDDEN);
         }
 
         if(gp1.getSalvos().size() == gp2.get().getSalvos().size()){
@@ -188,8 +188,6 @@ public class SalvoController {
         }
 
     }
-
-
 
     private boolean idValid(Long id){
         boolean idValid = false;
@@ -218,6 +216,8 @@ public class SalvoController {
             return (playerRepository.findByUserName(authentication.getName()));
         }
     }
+
+
 
 }
 
