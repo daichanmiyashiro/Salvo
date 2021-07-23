@@ -27,11 +27,11 @@ public class ScoreDTO {
         this.player = player;
     }
 
-    public double getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 

@@ -1,5 +1,4 @@
 package com.codeoftheweb.Salvo.dtos;
-
 import java.util.Map;
 
 public class DamageDTO {

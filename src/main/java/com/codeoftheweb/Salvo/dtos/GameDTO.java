@@ -22,7 +22,6 @@ public class GameDTO {
        this.created = game.getFechaCreacion();
        this.gamePlayers = game.getGamePlayers().stream().map(gp -> new GamePlayerDTO(gp)).collect(Collectors.toSet());
        this.scores = game.getGamePlayers().stream().map(gp -> new ScoreDTO(gp.getScoreDto())).collect(Collectors.toSet());
-
     }
 
     public Long getId() {
