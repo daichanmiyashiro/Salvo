@@ -96,7 +96,7 @@ public class GamePlayer {
         if (score == null) {
             score= new Score();
             score.setPlayer(this.getPlayer());
-            score.setScore(0.0);
+            score.setScore(null);
         }
         return score;
     }

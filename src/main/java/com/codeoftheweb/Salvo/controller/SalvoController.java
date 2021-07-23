@@ -2,7 +2,8 @@ package com.codeoftheweb.Salvo.controller;
 import com.codeoftheweb.Salvo.dtos.*;
 import com.codeoftheweb.Salvo.models.*;
 import com.codeoftheweb.Salvo.repository.*;
-import com.codeoftheweb.Salvo.service.Util;
+import com.codeoftheweb.Salvo.service.GameViewService;
+import com.codeoftheweb.Salvo.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,12 @@ public class SalvoController {
     @Autowired
     private SalvoRepository salvoRepository;
 
+    @Autowired
+    private ScoreRepository scoreRepository;
+
+    @Autowired
+    private GameViewService gameViewService;
+
     @GetMapping(value = "/games")
     public Map<String , Object> getListaGames(Authentication authentication){
         Map<String , Object> dto = new LinkedHashMap<>();
@@ -60,10 +67,12 @@ public class SalvoController {
         GamePlayer gamePlayer = gamePlayerRepo.findById(id).get();
         Game game = gamePlayer.getGame();
         Player playerAuthentication = playerRepository.findByUserName(authentication.getName());
+
         if(gamePlayer.getPlayer().getId() == playerAuthentication.getId()){
-            Map<String , Object> hits = Util.getHits(gamePlayer);
-            return new ResponseEntity<>(new GameViewDTO(game,gamePlayer,hits), HttpStatus.OK);
+
+            return new ResponseEntity<>(gameViewService.makeGameViewDTO(game,gamePlayer), HttpStatus.OK);
         }else{
+
             return new ResponseEntity<>(Util.makeMap("error","User ID not authorized"),HttpStatus.UNAUTHORIZED);
         }
     }
@@ -216,8 +225,6 @@ public class SalvoController {
             return (playerRepository.findByUserName(authentication.getName()));
         }
     }
-
-
 
 }
 

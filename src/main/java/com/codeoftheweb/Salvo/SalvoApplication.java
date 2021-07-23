@@ -105,23 +105,6 @@ public class SalvoApplication extends SpringBootServletInitializer {
 			Salvo salvo5 = new Salvo(gamePlayer1, 3 ,List.of("B4","D8","C3","E4","G1"));
 			Salvo salvo6 = new Salvo(gamePlayer2, 3 ,List.of("A7","F1","H5","J9","E9"));
 
-			/*salvoRepo.save(salvo1);
-			salvoRepo.save(salvo2);
-			salvoRepo.save(salvo3);
-			salvoRepo.save(salvo4);
-			salvoRepo.save(salvo5);
-			salvoRepo.save(salvo6);*/
-
-			Score score1 = new Score(player1,game1,0.5,LocalDateTime.now());
-			Score score2 = new Score(player2,game1,0.5,LocalDateTime.now());
-			Score score3 = new Score(player3,game2,1.0,LocalDateTime.now());
-			Score score4 = new Score(player4,game2,0.0,LocalDateTime.now());
-
-			scoreRepo.save(score1);
-			scoreRepo.save(score2);
-			scoreRepo.save(score3);
-			scoreRepo.save(score4);
-
 		};
 	}
 

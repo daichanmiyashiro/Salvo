@@ -1,11 +1,8 @@
 package com.codeoftheweb.Salvo.dtos;
-import com.codeoftheweb.Salvo.models.Game;
-import com.codeoftheweb.Salvo.models.GamePlayer;
+import com.codeoftheweb.Salvo.models.State;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class GameViewDTO {
 
@@ -13,7 +10,7 @@ public class GameViewDTO {
 
     private LocalDateTime created;
 
-    private String gameState;
+    private State gameState;
 
     private Set<GamePlayerDTO> gamePlayers = new HashSet<>();
 
@@ -22,19 +19,6 @@ public class GameViewDTO {
     private Set<SalvoDTO> salvoes = new HashSet<>();
 
     private HitDTO hits;
-
-    public GameViewDTO() {
-    }
-
-    public GameViewDTO(Game game, GamePlayer gamePlayer, Map<String , Object> map){
-        this.id = game.getId();
-        this.created = game.getFechaCreacion();
-        this.gameState = "PLAY";
-        this.gamePlayers = game.getGamePlayers().stream().map(gp -> new GamePlayerDTO(gp)).collect(Collectors.toSet());
-        this.ships = gamePlayer.getShips().stream().map(ship->new ShipDTO(ship)).collect(Collectors.toSet());
-        this.salvoes = game.getGamePlayers().stream().map(gp -> gp.getSalvos()).flatMap(salvos -> salvos.stream()).map(salvo -> new SalvoDTO(salvo)).collect(Collectors.toSet());
-        this.hits = new HitDTO(map);
-    }
 
     public Long getId() {
         return id;
@@ -52,11 +36,11 @@ public class GameViewDTO {
         this.created = created;
     }
 
-    public String getGameState() {
+    public State getGameState() {
         return gameState;
     }
 
-    public void setGameState(String gameState) {
+    public void setGameState(State gameState) {
         this.gameState = gameState;
     }
 
