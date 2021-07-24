@@ -147,6 +147,9 @@ public class GameViewServiceImplement implements GameViewService {
             if(!gpOpponent.isPresent()){
                 return State.WAITINGFOROPP;
             }
+            if(gpOpponent.get().getShips().size() == 0){
+                return State.WAIT;
+            }
 
             List<String> listHitLocations = gp.getSalvos().stream().flatMap(salvo -> getHitLocations(gp,salvo).stream()).collect(Collectors.toList());
             List<String> shipsLocationsOpponent = gpOpponent.get().getShips().stream().flatMap(ship -> ship.getShipLocations().stream()).collect(Collectors.toList());
@@ -168,12 +171,14 @@ public class GameViewServiceImplement implements GameViewService {
                         return State.LOST;
                     }
                 }
-                return State.PLAY;
+
             }
             if(gp.getSalvos().size() > gpOpponent.get().getSalvos().size()){
                 return State.WAIT;
-            }
+            }else{
 
+                return State.PLAY;
+            }
         }
         return State.PLACESHIPS;
     }
