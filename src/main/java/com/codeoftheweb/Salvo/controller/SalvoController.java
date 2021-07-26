@@ -139,7 +139,7 @@ public class SalvoController {
         }
         GamePlayer gp = gamePlayerRepo.findById(gamePlayerId).get();
         if(!idValid(gamePlayerId)){
-            return new ResponseEntity<>(Util.makeMap("error","ID is not valid"),HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(Util.makeMap("error","ID not valid"),HttpStatus.UNAUTHORIZED);
         }
         if(!isIdReference(gamePlayerId,authentication)){
             return new ResponseEntity<>(Util.makeMap("error","User ID not authorized"),HttpStatus.UNAUTHORIZED);
